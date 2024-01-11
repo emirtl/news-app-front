@@ -1,0 +1,70 @@
+<div class="register">
+
+  <p-card header="Register Form" subheader="you can register using the form below" [style]="{ width: '60%',margin:'auto' }">
+
+    <p-messages *ngIf=isShow [(value)]="messages" [enableService]="false" [closable]="true"></p-messages>
+
+
+    <form [formGroup]="form" >
+      <div class="inputGroup">
+
+        <input type="text" pInputText placeholder="username..." formControlName="username" />
+
+        <p class="error" *ngIf="username.errors?.['required']">Username is required</p>
+        <p class="error" *ngIf="username.errors?.['minlength']">username is not valid</p>
+
+
+              <p class="error" *ngIf="username.errors?.['minlength']">
+                Your email must have minimum {{username.errors?.['minlength'].requiredLength}} chars,
+                but it only has {{username.errors?.['minlength'].actualLength}}.
+              </p>
+
+
+      </div>
+
+      <div class="inputGroup mt-2">
+
+        <input type="email" pInputText placeholder="E-Mail..."  formControlName="email" />
+
+        <p class="error" *ngIf="email.errors?.['required']">email is required</p>
+        <p class="error" *ngIf="email.errors?.['email']">email is not valid</p>
+
+
+      </div>
+
+
+      <div class="inputGroup mt-2">
+
+        <input type="password" pInputText placeholder="password..."  formControlName="password" />
+
+
+        <ng-container
+          *ngIf="password.errors | onlyOneError:['required','minlength','passwordStrength'] as error">
+
+          <div class="error" *ngIf="error.minlength">
+            Your password must have minimum {{error.minlength.requiredLength}} chars,
+            but it only has {{error.minlength.actualLength}}.
+          </div>
+
+          <div class="error" *ngIf="error.passwordStrength">
+            Your password must have lower case, upper case and numeric characters.
+          </div>
+
+          <div class="error" *ngIf="error.required">
+           password is required
+          </div>
+
+        </ng-container>
+
+      </div>
+
+
+
+    </form>
+    <ng-template pTemplate="footer" >
+      <p-button label="Register" [disabled]="form.invalid" (onClick)="onRegister()" ></p-button>
+      <p-button label="Login Page" (onClick)="onBackToLoginPage()" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
+    </ng-template>
+  </p-card>
+
+</div>

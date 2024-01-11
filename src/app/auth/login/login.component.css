@@ -1,0 +1,13 @@
+input{
+  width:60%
+}
+
+form{
+  margin:auto
+}
+.error{
+  color: #a40000;
+  margin: 0;
+  padding: 0;
+
+}

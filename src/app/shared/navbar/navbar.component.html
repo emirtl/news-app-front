@@ -10,8 +10,8 @@
   <div class="p-toolbar-group-end">
     <p-button     class="mr-2" routerLink="/">Home</p-button>
     <p-button  class="mr-2" routerLink="/about-us">About Us</p-button>
-    <p-button     class="mr-2" routerLink="/auth/register">Register</p-button>
-    <p-button   class="mr-2" routerLink="/auth/login">Login</p-button>
-    <p-button  class="mr-2">Sign out</p-button>
+    <p-button     class="mr-2" routerLink="/auth/register" *ngIf="!(user$|async)">Register</p-button>
+    <p-button   class="mr-2" routerLink="/auth/login" *ngIf="!(user$|async)">Login</p-button>
+    <p-button  class="mr-2" (onClick)="logout()" *ngIf="user$|async">Sign out</p-button>
   </div>
 </p-toolbar>

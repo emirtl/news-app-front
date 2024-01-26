@@ -32,7 +32,6 @@ import { createPasswordStrengthValidator } from '../password-strength.validator'
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
-    HttpClientModule,
     MessagesModule,
     CommonModule,
     OnlyOneErrorPipe,

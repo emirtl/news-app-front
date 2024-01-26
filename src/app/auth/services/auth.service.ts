@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IUser } from '../interfaces/user.interface';
+import { IRequestLogin } from '../interfaces/request.login';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   private BACKEND_URL = 'http://localhost:9000/api/v1/auth';
 
@@ -21,10 +22,10 @@ export class AuthService {
     });
   }
 
-  login(email: string, password: String): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.BACKEND_URL}/login`, {
-      email,
-      password,
-    });
+  login(requestLogin: IRequestLogin): Observable<{ user: IUser }> {
+    return this.http.post<{ user: IUser }>(
+      `${this.BACKEND_URL}/login`,
+      requestLogin,
+    );
   }
 }

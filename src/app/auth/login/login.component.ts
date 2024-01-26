@@ -17,6 +17,10 @@ import { createPasswordStrengthValidator } from '../password-strength.validator'
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { IRequestLogin } from '../interfaces/request.login';
+import { Store } from '@ngrx/store';
+import { IAuthState } from '../interfaces/authState.interface';
+import { authActions } from '../store/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +48,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authservice: AuthService,
+    private store: Store<{ auth: IAuthState }>,
   ) {}
 
   ngOnInit(): void {
@@ -74,24 +78,9 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    const login = {
+    const requestLogin: IRequestLogin = {
       ...this.form.value,
     };
-    this.authservice.login(login.email, login.password).subscribe({
-      next: (token) => {
-        this.form.reset();
-        this.router.navigate(['/']);
-      },
-      error: (err: HttpErrorResponse) => {
-        this.isShow = true;
-        this.messages = [
-          {
-            severity: 'error',
-            summary: 'Error',
-            detail: err.error.error,
-          },
-        ];
-      },
-    });
+    this.store.dispatch(authActions.login({ requestLogin }));
   }
 }
